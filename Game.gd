@@ -159,7 +159,7 @@ func clear_map():
 	while MapBox.get_child_count() > 0:
 		var node = MapBox.get_child(0)
 		MapBox.remove_child(node)
-		node.queue_free()
+		node.free()
 
 
 # Called when a tile is clicked as pos
