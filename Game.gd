@@ -13,34 +13,34 @@ onready var InfoBox = get_node('box/info')
 var game_over = false
 var tiles_opened = 0
 
+
+
+
+
 func _ready():
 	start()
 
+
 func start():
-	randomize()
-	
 	# Hide win/lose labels
-	InfoBox.get_node('game_over').hide()
-	InfoBox.get_node('win').hide()
-	
-	# freeze/reset timer
-	set_process(false)
-	Time = 0
-	
-	# set init values
-	game_over = false
-	tiles_opened = 0
-	
-	# clean out any old tiles
-	if MapBox.get_child_count() > 0:
-		for tile in MapBox.get_children():
-			tile.queue_free()
-	
+	get_node('game_over').hide()
+	get_node('win').hide()
+
+
 	# Draw labels
 	InfoBox.get_node('time/amount').set_text(str(Time))
 	InfoBox.get_node('mines/amount').set_text(str(MineCount))
 	
+
+	make_tiles()
+	adjust_window_size()
+	distribute_mines()
+	
+
+	
+func make_tiles():
 	# Make tiles
+	assert MapBox.get_child_count() == 0
 	MapBox.set_columns(MapSize.x)
 	for y in range(MapSize.y):
 		for x in range(MapSize.x):
@@ -49,14 +49,19 @@ func start():
 			MapBox.add_child(tile)
 			tile.connect("bomb",self,'_on_hit_mine',[tile])
 			tile.connect("opened",self,'_on_tile_opened',[tile.get_meta('pos')])
-	
+
+func adjust_window_size():
 	# Adjust window size
 	var rect = MapBox.get_child(0).get_rect().size
-	var size = Vector2(rect.width*MapSize.x+48, (rect.height*MapSize.y)+get_node('box/info').get_rect().size.height+32)
+	var x = rect.width*MapSize.x+48
+	var y = (rect.height*MapSize.y)+get_node('box/info').get_rect().size.height+38
+	var size = Vector2(x,y)
 	OS.set_window_size(size)
-	
+
+func distribute_mines():
 	# Distribute mines
 	var M = MineCount
+	prints("Mines:",M)
 	while M > 0:
 		var minepos = randi() % int(MapSize.x*MapSize.y)
 		if not MapBox.get_child(minepos).mine:
@@ -68,13 +73,25 @@ func start():
 
 
 
+
+
 # Start a new game from the newgame dialog
-func new_game(width, height, mines):
-	prints(width, height, mines)
-	MapSize = Vector2(width, height)
-	MineCount = mines
-	start()
+func new_game(W,H,M):
+	game_over = false
+	MapSize = Vector2(W,H)
+	MineCount = M
+	tiles_opened = 0
+	set_process(false)
+	Time = 0
 	
+	clear_map()
+	randomize()
+	start()
+
+
+
+
+
 # Count mine neighbors
 func set_neighbors():
 	for y in range(MapSize.y):
@@ -86,6 +103,8 @@ func set_neighbors():
 				if get_tile(tile).mine:
 					mines += 1
 			get_tile(Vector2(x,y)).neighbors = mines
+
+
 
 
 # Get neighbors, ignoring places outside the map
@@ -123,27 +142,49 @@ func get_neighbors(origin):
 
 	return neighbors
 
+
+
+
 # get a tile at position x y
 func get_tile(pos):
 	return MapBox.get_child(pos.x+(pos.y*MapSize.x))
 
+
+
+
+# remove all tiles from the board
+func clear_map():
+#	for tile in MapBox.get_children():
+#		tile.queue_free()
+	while MapBox.get_child_count() > 0:
+		var node = MapBox.get_child(0)
+		MapBox.remove_child(node)
+		node.queue_free()
+
+
 # Called when a tile is clicked as pos
 func _on_tile_opened(pos):
-	if !game_over:
-		if !is_processing():
-			set_process(true)
-		tiles_opened += 1
-		if tiles_opened == MapBox.get_child_count() - MineCount:
-			InfoBox.get_node('win').show()
-			game_over = true
-			set_process(false)
-			
-			for tile in MapBox.get_children():
-				if tile.mine:
-					tile.set_text("*")
-					tile.set('custom_colors/font_color', Color(0,1,0))
 	
+	# Start the timer if not started yet
+	if !is_processing():
+		set_process(true)
+		
+	# increment tile_open count
+	tiles_opened += 1
 	
+	# If we win..
+	if !game_over and tiles_opened == MapBox.get_child_count() - MineCount:
+		get_node('win').show()
+		game_over = true
+		set_process(false)
+		
+		# Highlight all mines in victory green
+		for tile in MapBox.get_children():
+			if tile.mine:
+				tile.set_text("*")
+				tile.set('custom_colors/font_color', Color(0,1,0))
+	
+	# Activate neighbors
 	var o = get_tile(pos)
 	if o.neighbors == 0 and !o.mine:
 		var neighbors = get_neighbors(pos)
@@ -152,19 +193,27 @@ func _on_tile_opened(pos):
 				get_tile(xy).activate()
 
 
+
+
+
 # Called when a mine tile is clicked
 func _on_hit_mine(hit_mine):
 	game_over = true
-	InfoBox.get_node('game_over').show()
+	get_node('game_over').show()
 	for tile in MapBox.get_children():
-		if tile.mine && !tile.is_pressed():
+		if !tile.is_pressed():
 			tile.activate()
 	set_process(false)
+
+
 
 # Process: Count time
 func _process(delta):
 	Time += delta
 	InfoBox.get_node('time/amount').set_text(str(int(Time)))
+
+
+
 
 # Popup newgame dialog
 func _on_New_pressed():

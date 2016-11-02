@@ -4,7 +4,7 @@ extends PopupDialog
 var settings = [
 	[9,9,10],
 	[16,16,40],
-	[16,32,99]
+	[24,24,99]
 	]
 
 onready var WidthBox = get_node('box/options/custom/width/SpinBox')
@@ -31,4 +31,5 @@ func _on_OK_pressed():
 	var H = HeightBox.get_value()
 	var M = MinesBox.get_value()
 	get_parent().new_game(W,H,M)
+	
 	hide()

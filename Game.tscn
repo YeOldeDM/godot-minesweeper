@@ -9,8 +9,8 @@ anchor/right = 1
 anchor/bottom = 1
 focus/ignore_mouse = false
 focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 2
+size_flags/horizontal = 3
+size_flags/vertical = 3
 margin/left = 0.0
 margin/top = 0.0
 margin/right = 0.0
@@ -21,8 +21,8 @@ script/script = ExtResource( 1 )
 
 focus/ignore_mouse = false
 focus/stop_mouse = false
-size_flags/horizontal = 2
-size_flags/vertical = 2
+size_flags/horizontal = 3
+size_flags/vertical = 3
 margin/left = 7.0
 margin/top = 7.0
 margin/right = 593.0
@@ -115,44 +115,6 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="game_over" type="Label" parent="box/info"]
-
-visibility/visible = false
-focus/ignore_mouse = true
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 0
-margin/left = 251.0
-margin/top = 0.0
-margin/right = 327.0
-margin/bottom = 14.0
-custom_colors/font_color = Color( 1, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_constants/shadow_as_outline = 1
-text = "GAME OVER"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="win" type="Label" parent="box/info"]
-
-visibility/visible = false
-focus/ignore_mouse = true
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 0
-margin/left = 251.0
-margin/top = 0.0
-margin/right = 327.0
-margin/bottom = 14.0
-custom_colors/font_color = Color( 0, 0.820624, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_constants/shadow_as_outline = 1
-text = "YOU WIN"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
 [node name="mines" type="HBoxContainer" parent="box/info"]
 
 editor/display_folded = true
@@ -198,6 +160,7 @@ max_lines_visible = -1
 
 [node name="NewGame" type="PopupDialog" parent="."]
 
+editor/display_folded = true
 visibility/visible = false
 focus/ignore_mouse = false
 focus/stop_mouse = true
@@ -212,6 +175,7 @@ script/script = ExtResource( 2 )
 
 [node name="box" type="VBoxContainer" parent="NewGame"]
 
+editor/display_folded = true
 anchor/right = 1
 anchor/bottom = 1
 focus/ignore_mouse = false
@@ -253,6 +217,7 @@ margin/bottom = 21.0
 
 [node name="options" type="HBoxContainer" parent="NewGame/box"]
 
+editor/display_folded = true
 focus/ignore_mouse = false
 focus/stop_mouse = false
 size_flags/horizontal = 3
@@ -487,6 +452,44 @@ enabled_focus_mode = 2
 shortcut = null
 text = "Cancel"
 flat = false
+
+[node name="game_over" type="Label" parent="."]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 7.0
+margin/top = 293.0
+margin/right = 593.0
+margin/bottom = 307.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 1
+text = "GAME OVER"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="win" type="Label" parent="."]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 7.0
+margin/top = 293.0
+margin/right = 593.0
+margin/bottom = 307.0
+custom_colors/font_color = Color( 0, 0.820624, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 1
+text = "YOU WIN"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 
 [connection signal="pressed" from="box/info/New" to="." method="_on_New_pressed"]
 

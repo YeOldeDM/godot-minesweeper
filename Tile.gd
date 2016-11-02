@@ -71,7 +71,9 @@ func activate():
 	draw_label()
 
 func _on_Button_pressed():
-	activate()
+	if !get_node('/root/Game').game_over:
+		activate()
+
 
 func _input(event):
 	if is_hovered():
