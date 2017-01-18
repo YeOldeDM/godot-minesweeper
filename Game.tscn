@@ -243,10 +243,13 @@ button/count = 3
 button/min_button_size = -1.0
 button/align = 1
 button/0/text = "Beginner"
+button/0/tooltip = ""
 button/0/icon = null
 button/1/text = "Intermediate"
+button/1/tooltip = ""
 button/1/icon = null
 button/2/text = "Advanced"
+button/2/tooltip = ""
 button/2/icon = null
 button/selected = 0
 

@@ -2,12 +2,12 @@
 extends Button
 
 const NeighborColors = [
-	Color(0,0,1),
-	Color(0,1,0),
-	Color(1,0,0),
-	Color(0,1,1),
-	Color(1,0,1),
-	Color(1,1,0),
+	Color(0.3,0.3,1),
+	Color(0.3,1,0.3),
+	Color(1,0.3,0.3),
+	Color(0.3,1,1),
+	Color(1,0.3,1),
+	Color(1,1,0.3),
 	Color(1,1,1)]
 
 signal bomb
@@ -22,8 +22,9 @@ var clicklock = false
 
 func draw_label():
 	if mine:
-		set_text("*")
-		set('custom_colors/font_color_pressed',Color(1,0,0))
+		set_text("")
+		set_button_icon(preload('res://mine.png'))
+		#set('custom_colors/font_color_pressed',Color(1,0,0))
 		
 	elif neighbors > 0:
 		set_text(str(neighbors))

@@ -1,6 +1,19 @@
-[gd_scene load_steps=3 format=1]
+[gd_scene load_steps=5 format=1]
 
 [ext_resource path="res://Tile.gd" type="Script" id=1]
+
+[sub_resource type="StyleBoxFlat" id=3]
+
+content_margin/left = -1.0
+content_margin/right = -1.0
+content_margin/top = -1.0
+content_margin/bottom = -1.0
+bg_color = Color( 0.769531, 0.769531, 0.769531, 1 )
+light_color = Color( 0.8, 0.8, 0.8, 1 )
+dark_color = Color( 0.441406, 0.441406, 0.441406, 1 )
+border_size = 4
+border_blend = false
+draw_bg = true
 
 [sub_resource type="StyleBoxFlat" id=1]
 
@@ -8,10 +21,23 @@ content_margin/left = -1.0
 content_margin/right = -1.0
 content_margin/top = -1.0
 content_margin/bottom = -1.0
-bg_color = Color( 0.109375, 0.109375, 0.109375, 1 )
-light_color = Color( 0, 0, 0, 1 )
-dark_color = Color( 0, 0, 0, 1 )
+bg_color = Color( 0.234375, 0.234375, 0.234375, 1 )
+light_color = Color( 0.160156, 0.160156, 0.160156, 1 )
+dark_color = Color( 0.332031, 0.332031, 0.332031, 1 )
 border_size = 1
+border_blend = false
+draw_bg = true
+
+[sub_resource type="StyleBoxFlat" id=2]
+
+content_margin/left = -1.0
+content_margin/right = -1.0
+content_margin/top = -1.0
+content_margin/bottom = -1.0
+bg_color = Color( 0.6, 0.6, 0.6, 1 )
+light_color = Color( 0.8, 0.8, 0.8, 1 )
+dark_color = Color( 0.441406, 0.441406, 0.441406, 1 )
+border_size = 4
 border_blend = false
 draw_bg = true
 
@@ -26,7 +52,9 @@ margin/left = 0.0
 margin/top = 0.0
 margin/right = 32.0
 margin/bottom = 32.0
+custom_styles/hover = SubResource( 3 )
 custom_styles/pressed = SubResource( 1 )
+custom_styles/normal = SubResource( 2 )
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
